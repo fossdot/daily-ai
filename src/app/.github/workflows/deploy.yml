@@ -23,9 +23,11 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        working-directory: ./src/app
         run: npm ci
 
       - name: Build
+        working-directory: ./src/app
         run: npm run build
         env:
           NEXT_PUBLIC_NEWS_API_KEY: ${{ secrets.NEXT_PUBLIC_NEWS_API_KEY }}
@@ -33,11 +35,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Create .nojekyll
+      - name: Prepare output
         run: |
-          touch out/.nojekyll
-          cp -r out/* .
-          touch .nojekyll
+          mkdir -p ./out
+          cp -r ./src/app/out/* ./out/
+          touch ./out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
