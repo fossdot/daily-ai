@@ -1,12 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',  // Enable static exports
+  output: 'export',
   images: {
-    unoptimized: true, // Required for static export
+    unoptimized: true,
   },
-  basePath: '/daily-ai', // Updated repository name
+  basePath: '/daily-ai',
   assetPrefix: '/daily-ai/',
   trailingSlash: true,
+  distDir: 'out',
 }
 
 module.exports = nextConfig 
