@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Daily AI - Stay Updated with AI News",
+  title: "Daily AI",
   description: "Your daily source for the latest artificial intelligence news, developments, and trends.",
 };
 
