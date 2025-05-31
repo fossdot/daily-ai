@@ -16,42 +16,53 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Debug - List files
+        run: |
+          echo "Root directory:"
+          ls -la
+          echo "src directory:"
+          ls -la src
+          echo "src/app directory:"
+          ls -la src/app
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
-        working-directory: ./src/app
-        run: npm ci
+        run: |
+          npm install
+          npm install -g typescript
+
+      - name: Create Next.js app
+        run: |
+          cd src/app
+          npm init -y
+          npm install next@latest react@latest react-dom@latest
+          npm install @heroicons/react date-fns axios
+          npm install -D typescript @types/react @types/node @types/react-dom
+          npm install -D tailwindcss postcss autoprefixer
+          npx tailwindcss init -p
 
       - name: Build
-        working-directory: ./src/app
-        run: npm run build
+        run: |
+          cd src/app
+          npm run build
         env:
           NEXT_PUBLIC_NEWS_API_KEY: ${{ secrets.NEXT_PUBLIC_NEWS_API_KEY }}
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Prepare output
-        run: |
-          mkdir -p ./out
-          cp -r ./src/app/out/* ./out/
-          touch ./out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./src/app/out
 
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
