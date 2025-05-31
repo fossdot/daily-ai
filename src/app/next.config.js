@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     unoptimized: true, // Required for static export
   },
-  basePath: '/ai-pulse', // Replace with your repository name
+  basePath: '/daily-ai', // Updated repository name
 }
 
 module.exports = nextConfig 
