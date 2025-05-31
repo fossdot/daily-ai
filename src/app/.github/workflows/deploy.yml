@@ -5,6 +5,7 @@ on:
     branches:
       - main
 
+# Workflow to deploy Next.js to GitHub Pages
 jobs:
   deploy:
     runs-on: ubuntu-latest
